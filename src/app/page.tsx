@@ -1,4 +1,5 @@
 "use client"
+import { ModeToggle } from "@/components/theme-toggle"
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -9,9 +10,9 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { MapPin, Search } from "lucide-react"
+import { Loader2, MapPin, Search } from "lucide-react"
 import { useEffect, useState } from "react"
+import { Toaster, toast } from "sonner"
 
 interface WeatherData {
   city: string
@@ -99,84 +100,111 @@ export default function Home() {
     getUserLocation()
   }, [])
 
+  useEffect(() => {
+    if (error) {
+      toast.error(error)
+    }
+  }, [error])
+
   return (
-    <section className="grid place-items-center h-screen">
-      <Card className="w-2/3 drop-shadow-lg">
-        <CardHeader>
-          <CardTitle>WeatherFinder</CardTitle>
-          <CardDescription>Um app que exibe a previsão do tempo em tempo real com base na sua localização ou em um local escolhido.</CardDescription>
-        </CardHeader>
-        <CardContent>
-        <form onSubmit={handleSearch}>
-          <div className="grid w-full items-center gap-4">
-            <div className="flex flex-col space-y-1.5">
-              <Label htmlFor="name">Buscar clima</Label>
-              <Input 
-                id="name" 
-                placeholder="Escolha uma cidade" 
-                value={city} 
-                onChange={(e) => setCity(e.target.value)} 
-              />
-            </div>
-          </div>
-        </form>
-        </CardContent>
-        <CardFooter className="flex justify-between">
-          <Button disabled={loading} variant="outline" onClick={getUserLocation}><MapPin /> Usar localização</Button>
-          <Button disabled={loading} type="button" onClick={handleSearch}><Search /> Buscar</Button>
-        </CardFooter>
-      </Card>
-      {loading && (
-        <div className="flex justify-center my-8">
-          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[hsl(var(--primary))]"></div>
-        </div>
-      )}
-
-      {error && <div className="my-4 p-4 border border-red-300 rounded-md bg-red-50 text-red-800 capitalize">{error}</div>}
-
-      {weatherData && !loading && (
-      <Card className="w-2/3 drop-shadow-lg">
-        <div className="rounded-lg overflow-hidden">
-        <div className="px-6 py-4">
-          <h2 className="text-xl font-semibold flex justify-center">{weatherData.city}</h2>
-        </div>
-        <div className="flex justify-center">
-          <div className="flex flex-col items-center">
-            <div className="flex items-center justify-center mb-4">
-              <img
-                src={`https://openweathermap.org/img/wn/${weatherData.icon}@2x.png`}
-                alt={weatherData.condition}
-                className="w-20 h-20"
-              />
-              <div className="text-4xl font-bold ml-2">
-                {Math.round(weatherData.temperature)}°C
-              </div>
-            </div>
-
-            <div className="text-xl text-center mb-6 capitalize">{weatherData.condition}</div>
-
-            <div className="grid grid-cols-2 gap-4 w-full">
-              <div className="flex items-center">
-                <div className="text-blue-500 mr-2">💧</div>
-                <div>
-                  <div className="font-bold">Umidade</div>
-                  <div>{weatherData.humidity}%</div>
+    <>
+      <Toaster />
+      <section className="grid place-items-center h-screen">
+        <Card className="w-2/3 drop-shadow-lg my-2 animate-in fade-in zoom-in-95 duration-500">
+          <CardHeader className="flex flex-col justify-between items-center">
+            <ModeToggle />
+            <CardTitle className="my-2">WeatherFinder</CardTitle>
+            <CardDescription>
+              Um app que exibe a previsão do tempo em tempo real com base na sua localização ou em um local escolhido.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <form onSubmit={handleSearch}>
+              <div className="grid w-full items-center gap-4 justify-center">
+                <div className="flex space-y-1.5">
+                  <Input
+                    id="name"
+                    placeholder="Escolha uma cidade"
+                    value={city}
+                    onChange={(e) => setCity(e.target.value)}
+                    className="focus:ring-2 focus:ring-primary transition-all duration-300"
+                  />
                 </div>
               </div>
+            </form>
+          </CardContent>
+          <CardFooter className="flex justify-center space-x-8">
+            <Button
+              disabled={loading}
+              variant="outline"
+              onClick={getUserLocation}
+              className="transition-transform duration-300 hover:scale-105"
+            >
+              <MapPin />
+              <span className="hidden md:inline">Minha cidade</span>
+            </Button>
+            <Button
+              disabled={loading}
+              type="button"
+              onClick={handleSearch}
+              className="transition-transform duration-300 hover:scale-105"
+            >
+              <Search />
+              <span className="hidden md:inline">Buscar</span>
+            </Button>
+          </CardFooter>
+        </Card>
 
-              <div className="flex items-center">
-                <div className="text-blue-500 mr-2">💨</div>
-                <div>
-                  <div className="font-bold">Velocidade do vento</div>
-                  <div>{weatherData.windSpeed} m/s</div>
+        {loading && (
+          <div className="flex justify-center items-center my-8">
+            <Loader2 className="h-12 w-12 text-primary animate-spin" />
+          </div>
+        )}
+
+        {weatherData && !loading && (
+          <Card className="w-2/3 drop-shadow-lg my-2 animate-in fade-in slide-in-from-bottom duration-500">
+            <div className="rounded-lg overflow-hidden">
+              <div className="px-6 py-4">
+                <h2 className="text-xl font-semibold flex justify-center">{weatherData.city}</h2>
+              </div>
+              <div className="flex justify-center">
+                <div className="flex flex-col items-center">
+                  <div className="flex items-center justify-center mb-4">
+                    <img
+                      src={`https://openweathermap.org/img/wn/${weatherData.icon}@2x.png`}
+                      alt={weatherData.condition}
+                      className="w-20 h-20 invert dark:invert-0 transition-transform duration-500 hover:scale-110"
+                    />
+                    <div className="text-4xl font-bold ml-2">
+                      {Math.round(weatherData.temperature)}°C
+                    </div>
+                  </div>
+
+                  <div className="text-xl text-center mb-6 capitalize">{weatherData.condition}</div>
+
+                  <div className="grid grid-cols-2 gap-4 w-full">
+                    <div className="flex items-center">
+                      <div className="text-blue-500 mr-2">💧</div>
+                      <div>
+                        <div className="font-bold">Umidade</div>
+                        <div>{weatherData.humidity}%</div>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center">
+                      <div className="text-blue-500 mr-2">💨</div>
+                      <div>
+                        <div className="font-bold">Vento</div>
+                        <div>{weatherData.windSpeed} m/s</div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
-      </Card>
-      )}
-    </section>
+          </Card>
+        )}
+      </section>
+    </>
   )
 }
