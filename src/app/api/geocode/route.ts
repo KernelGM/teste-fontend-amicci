@@ -68,8 +68,7 @@ export async function GET(request: Request): Promise<NextResponse<GeocodeApiResp
     }
 
     return NextResponse.json({ city })
-  } catch (error) {
+  } catch {
     return NextResponse.json({ message: "Falha ao geocodificar a localização" }, { status: 500 })
   }
 }
-

@@ -100,7 +100,7 @@ export async function GET(request: Request): Promise<NextResponse<WeatherApiResp
     }
 
     return NextResponse.json(weatherData)
-  } catch (error) {
+  } catch {
     return NextResponse.json({ message: "Falha ao buscar dados meteorológicos!" }, { status: 500 })
   }
 }
