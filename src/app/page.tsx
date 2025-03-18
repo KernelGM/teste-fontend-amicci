@@ -132,7 +132,7 @@ export default function Home() {
         </div>
       )}
 
-      {error && <div className="my-4 p-4 border border-red-300 rounded-md bg-red-50 text-red-800">{error}</div>}
+      {error && <div className="my-4 p-4 border border-red-300 rounded-md bg-red-50 text-red-800 capitalize">{error}</div>}
 
       {weatherData && !loading && (
       <Card className="w-2/3 drop-shadow-lg">
