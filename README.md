@@ -15,3 +15,7 @@ No campo de busca o usuário deverá digitar o nome da cidade e ao clicar no bot
 buscar, deverá consultar diretamente a api OpenWeather e exibir os dados que 
 encontrar ou, em caso de erro, exibir uma mensagem avisando de que não
 encontrou a cidade.
+
+# Usados
+
+Typescript, nextjs, tailwindcss, shadcn (button, card, input, label, sonner, dropdown-menu), lucide-react, next-themes, tailwindcss-animate
