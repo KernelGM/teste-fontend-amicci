@@ -1,0 +1,21 @@
+services:
+  nextjs:
+    container_name: teste-fontend-amicci-nextjs
+    build:
+      context: .
+      dockerfile: ./frontend.Dockerfile
+    env_file: .env
+    environment:
+      - NEST_API_URL=http://localhost/nestjs
+      - NEXTAUTH_URL=http://localhost
+      - NEXT_PUBLIC_URL=http://localhost
+      - AUTH_TRUST_HOST=true
+    networks:
+      - teste-fontend-amicci-network
+    ports:
+      - "3100:3000"
+    restart: always
+
+networks:
+  teste-fontend-amicci-network:
+    driver: bridge
