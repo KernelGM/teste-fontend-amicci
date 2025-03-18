@@ -10,6 +10,12 @@ RUN npm install -g pnpm && pnpm install
 # Copia o código-fonte do frontend
 COPY ./ .
 
+# Roda o linter
+RUN pnpm run lint
+
+# Roda os testes
+RUN pnpm run test
+
 # Compila o frontend
 RUN pnpm run build
 
