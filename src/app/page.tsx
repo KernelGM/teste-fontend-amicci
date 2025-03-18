@@ -101,7 +101,7 @@ export default function Home() {
 
   return (
     <section className="grid place-items-center h-screen">
-      <Card className="w-2/3">
+      <Card className="w-2/3 drop-shadow-lg">
         <CardHeader>
           <CardTitle>WeatherFinder</CardTitle>
           <CardDescription>Um app que exibe a previsão do tempo em tempo real com base na sua localização ou em um local escolhido.</CardDescription>
@@ -135,8 +135,8 @@ export default function Home() {
       {error && <div className="my-4 p-4 border border-red-300 rounded-md bg-red-50 text-red-800">{error}</div>}
 
       {weatherData && !loading && (
-      <Card className="w-2/3">
-        <div className="rounded-lg shadow-sm overflow-hidden">
+      <Card className="w-2/3 drop-shadow-lg">
+        <div className="rounded-lg overflow-hidden">
         <div className="px-6 py-4">
           <h2 className="text-xl font-semibold flex justify-center">{weatherData.city}</h2>
         </div>
