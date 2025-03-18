@@ -70,7 +70,7 @@ export async function GET(request: Request): Promise<NextResponse<WeatherApiResp
 
   try {
     const response = await fetch(
-      `https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(city)}&units=metric&appid=${apiKey}`,
+      `https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(city)}&units=metric&appid=${apiKey}&lang=pt_br`,
     )
 
     if (!response.ok) {
