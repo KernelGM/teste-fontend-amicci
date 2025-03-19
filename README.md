@@ -36,6 +36,13 @@ A pasta `src/` contém o código-fonte organizado da seguinte forma:
    cd teste-fontend-amicci
    ```
 
+3. **Criar um arquivo `.env` dentro da pasta com as chaves das APIs:**
+
+   ```bash
+   OPENWEATHER_API_KEY=COLOQUE_SUA_CHAVE_AQUI
+   GOOGLE_MAPS_API_KEY=COLOQUE_SUA_CHAVE_AQUI
+   ```
+
 ## Com Docker
 
 **Se você tiver o Docker e o Docker Compose instalados, basta rodar:**
